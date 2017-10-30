@@ -1,0 +1,6 @@
+<!--index.wxml-->
+<view class="container">
+  <input bindinput='openIdchange' placeholder='openid'></input>
+  <input bindinput='roomIdchange' placeholder='room_id'></input>
+  <button class="btn-style" bindtouchstart="touchdown" bindtouchend="touchup">按住 录音</button>
+</view>

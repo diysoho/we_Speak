@@ -1,0 +1,25 @@
+
+page{
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+.container {
+  background: white;
+  font-size: 24rpx;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+@media screen and (max-width:375px){
+  .container{
+    font-size: 28rpx;
+  }
+}
+@media screen and (max-width:414px){
+  .container{
+    font-size: 32rpx;
+  }
+}

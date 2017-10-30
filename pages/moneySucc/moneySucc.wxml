@@ -1,0 +1,12 @@
+<view class="container">
+  <view class='top'>
+    <view class='image'><image src='./../../image/success@3x.png'></image></view>
+    <view class='title'>提现申请已提交</view>
+    <view class='text'>提现金额在1到5个工作日内到账</view>
+  </view>
+  <view class='bottom'>
+    <view><text>提现账户</text>微信钱包</view>
+    <view><text>提现金额</text>￥{{money}}</view>
+  </view>
+  <view bindtap='success' id='{{button}}'></view>
+</view>

@@ -1,0 +1,59 @@
+<view class="container">
+  <view class='top'>
+     <view class='head'>
+       <image src='{{myInfo.avatarUrl}}'></image>
+     </view>
+     <text>{{myInfo.nickName}}</text>
+  </view>
+  <view class='bottom' wx:if="{{getData}}">
+    <view class='choose'>
+       <view class='{{current?"current":""}}' bindtap='current'>
+          <text>收到红包</text>
+       </view>
+       <view class='{{current?"":"current"}}' data-current="2" bindtap='current'>
+          <text>发出红包</text>
+       </view>
+    </view>
+    <view class='cut_line'></view>
+    <view class='get_list'>
+       <view class='history_show'>
+          <view class='item'>
+              <text class='text'>金额(元)</text>
+              <text class='num money'>{{data.money}}</text>
+          </view>
+          <view class='item'>
+              <text class='text'>数量(个)</text>
+              <text class='num'>{{data.num}}</text>
+          </view>
+       </view>
+       <view class='cut_line'></view>
+       <scroll-view scroll-y class='history_list'>
+          <block wx:if="{{data.list.length}}">
+            <view class='item' wx:for="{{data.list}}" wx:key="list">
+              <view class='item_head'>
+                  <image src='{{item.src}}'></image>
+              </view>
+              <view class='item_info'>
+                  <view class='info_name'>
+                    <text class='name'>{{item.name}}</text>
+                  </view>
+                  <view>
+                    口令：<text>{{item.text}}</text>
+                  </view>
+                  <view>
+                    <text class='data'>{{item.data}}</text>
+                    <text class='time'>{{item.time}}</text>
+                  </view>
+              </view>
+              <view class='item_money'>
+                  <text>{{item.money}}</text>元
+              </view>
+            </view> 
+          </block>
+          <block wx:else>
+              <view class='nothing'></view>
+          </block>  
+       </scroll-view>
+    </view>
+  </view>
+</view>

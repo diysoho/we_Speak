@@ -1,0 +1,30 @@
+<view class="container" >
+  <view class='balance'>
+    <view><text>账户余额</text></view>
+    <view class='money_balance'><text>{{money_balance}}</text></view>
+  </view>
+  <view class='cut_line'></view>
+  <view class='get_money'>
+    <view class='show_title'>
+      <text class='title'>提现金额:</text>
+      <input type="number" class='number' bindinput="input"></input>
+    </view>
+    <view class='hide_title'>
+      <text class='title'>提现金额:</text>
+      <text class='{{enough}}'>账户余额不足</text>
+      <text class='all_money' bindtap='getAllMoney'>全部提现</text>
+    </view>
+    <view class='show_title'>
+      <text class='title'>提现账户:</text>
+      <text>微信钱包</text>
+    </view>
+    <view class='hide_title'>
+      <text class='title'>提现金额:</text>
+      <text class='text'>小程序余额只能提现到微信钱包</text>
+    </view>
+  </view>
+  <view class='extract'>
+    <view bindtouchstart='press_down' id='{{button}}'></view>
+    <view>提现金额在1到5个工作日内到账</view>
+  </view> 
+</view>
