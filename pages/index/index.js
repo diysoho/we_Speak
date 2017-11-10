@@ -1,174 +1,246 @@
-//index.js
-//获取应用实例
-var app = getApp();
+
 Page({
   data: {
-    j: 1,//帧动画初始图片
-    isSpeaking: false,//是否正在说话
-    voices: [],//音频数组
-    a:false,
-    openid:"",
-    room_id:"",
-    src:""
+    userInfo: {},
+    hasUserInfo: false,
+    head: './../../images/head.png',
+    choosePay: "weixin",
+    color:"yuanlai",
+    nick:'',
+    headpic:'',
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    val:'',
+    pay_money: "",
+    fw: '0.00',
+    num:'',
+    moneyNum:'',
+    yue:null
   },
+
+  //事件处理函数
   onLoad: function () {
-    console.log(app.globalData.userInfo)
-  },
-  //手指按下
-  touchdown: function () {
-    console.log("手指按下了...")
-    console.log("new date : " + new Date)
-    var _this = this;
-    speaking.call(this);
-    this.setData({
-      isSpeaking: true
+    console.log(getApp().globalData.money);
+    var that = this
+    //调用应用实例的方法获取全局数据
+    getApp().getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo,
+        hasUserInfo:true
+      })
     })
-    if (this.data.isSpeaking){
-      //开始录音
-      wx.startRecord({
-        success: function (res) {
-          //临时路径,下次进入小程序时无法正常使用
-          _this.setData({
-            src: res.tempFilePath
-          })
-          console.log("录音成功准备发送");
-          wx.uploadFile({
-            url: 'http://m.qu6.wang/bns/room/upload_audio', //仅为示例，非真实的接口地址
-            filePath: res.tempFilePath,
-            name: 'file',
-            formData: {
-              'user': 'test',
-              'openid': _this.data.openid,
-              'room_id': _this.data.room_id
-            },
-            success: function (res) {
-              var data = res.data
-              console.log("发送过去了");
-              console.log(res);
-              //do something
-            },
-            fail: function () {
-              console.log(123)
-            }
-          })
-          //持久保存
-          // wx.saveFile({
-          //   tempFilePath: tempFilePath,
-          //   success: function (res) {
-          //     //持久路径
-          //     //本地文件存储的大小限制为 100M
-          //     savedFilePath = res.savedFilePath;
-          //     console.log("savedFilePath: " + savedFilePath);
-          //     _this.setData({
-          //       a:true
-          //     })
-          //   }
-          // })
-          wx.showToast({
-            title: '恭喜!录音成功',
-            icon: 'success',
-            duration: 1000
-          })
+  },
+  onShow(){
+    this.setData({
+      yue: getApp().globalData.money
+    })
+  },
+  onHide(){
+    this.setData({
+      num: '',
+      moneyNum: '',
+      val: ''
+    })
+  },
+  onPullDownRefresh: function () {
+    wx.stopPullDownRefresh()
+  },
 
-
-          // //获取录音音频列表
-          // wx.getSavedFileList({
-          //   success: function (res) {
-          //     var voices = [];
-          //     for (var i = 0; i < res.fileList.length; i++) {
-          //       //格式化时间
-          //       var createTime = new Date(res.fileList[i].createTime)
-          //       //将音频大小B转为KB
-          //       var size = (res.fileList[i].size / 1024).toFixed(2);
-          //       var voice = { filePath: res.fileList[i].filePath, createTime: createTime, size: size };
-          //       console.log("文件路径: " + res.fileList[i].filePath)
-          //       console.log("文件时间: " + createTime)
-          //       console.log("文件大小: " + size)
-          //       voices = voices.concat(voice);
-          //     }
-          //     _this.setData({
-          //       voices: voices
-          //     })
-          //   }
-          // })
-        },
-        fail: function (res) {
-          //录音失败
-          wx.showModal({
-            title: '提示',
-            content: '录音的姿势不对!',
-            showCancel: false,
-            success: function (res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-                return
-              }
-            }
-          })
-        }
+  //口令
+  bindChange: function (e) {
+    var that = this;
+    var val = e.detail.value;
+    var aa = val.replace(/[^\u4E00-\u9FA5]/g, '');
+    var ff = aa.substring(0, 50); //截取字符串
+    that.setData({
+      val: ff
+    })
+  },
+  //奖励
+  bindMoney:function(e){
+    var that=this;
+    if (e.detail.value == "") {
+      this.setData({
+        fw: "0.00"
+      });
+    } else {
+      var a = e.detail.value * 1;
+      var b = e.detail.value * 0.02;
+      a = a + b;
+      a = a.toFixed(2);
+      b = b.toFixed(2);
+      that.setData({
+        pay_money: a,
+        fw: b
+      });
+      var moneyNum = parseFloat(e.detail.value);
+        that.setData({
+          moneyNum: moneyNum
+        });
+      }
+   
+    },
+ //数量
+  bindNumber:function(e){
+    var that=this;
+    var num=e.detail.value;
+    var reg = /^([1-9]\d{0,1}|100)$/;
+    if(reg.test(num)){
+      that.setData({
+        num:num
+      })
+    }else{
+      wx.showToast({
+        title: '您输入有误',
+      }),
+      that.setData({
+        num:''
       })
     }
   },
-  //手指抬起
-  touchup: function () {
-    console.log("手指抬起了...");
-    this.setData({
-      isSpeaking:false
+
+//宣传语
+  bindBroad:function(e){
+    var that=this;
+    var broadcast=e.detail.value;
+    that.setData({
+      broadcast: broadcast
     })
-    clearInterval(this.timer);
-    if (!this.data.isSpeaking){
-      wx.stopRecord();
+  },
+  // 选择支付方式
+  choosePayMoney:function(e) {
+    var that=this;
+    if (e.currentTarget.dataset.id == "yuer") {
+      that.setData({
+        choosePay: "yuer"
+      })
+    } else {
+      that.setData({
+        choosePay: "weixin"
+      })
     }
   },
-  openIdchange(e){
-    this.setData({
-      openid: e.detail.value
+  current: function (e) {
+    var that = this;
+    that.setData({
+      color: "anxia"
     })
-    console.log(e);
   },
-  roomIdchange(e) {
-    this.setData({
-      room_id: e.detail.value
+  changecolor: function (e) {
+    var that = this;
+    that.setData({
+      color: "yuanlai"
     })
-    console.log(e);
   },
-  //点击播放录音
-  gotoPlay: function (e) {
-    var filePath = e.currentTarget.dataset.key;
-    //点击开始播放
-    wx.showToast({
-      title: '开始播放',
-      icon: 'success',
-      duration: 1000
-    })
-    wx.request({
-      url: filePath,
-      success(res) {
-        console.log(res);
-      }
-    })
-    wx.playVoice({
-      filePath: filePath,
-      success: function () {
-        wx.showToast({
-          title: '播放结束',
-          icon: 'success',
-          duration: 1000
-        })
-      }
-    })
+  formSubmit:function(e){
+    var that = this;
+    if (e.detail.value.num.length != 0 && e.detail.value.kouling.length != 0 && e.detail.value.money.length != 0){
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+    var usermsg = wx.getStorageSync('usermg');
+    var us = that.data.userInfo;
+    if (JSON.stringify(us) != "{}"){
+      var nick = us.nickName;
+      var headpic = us.avatarUrl;
+      that.setData({
+        nick: nick,
+        headpic: headpic
+      })
+      
+      wx.request({
+        url: getApp().globalData.url + '/Bns/Room/create_room',
+        data:{
+          create_user_openid: getApp().globalData.openid,
+          kouling: that.data.val,
+          red_num: that.data.num,
+          pay_money: that.data.pay_money,
+          red_money:that.data.moneyNum,
+          xuanchuanyu: that.data.broadcast,
+          pay_type:that.data.choosePay
+        },
+        method: 'GET',
+        success:function(res){
+          wx.hideLoading();
+          console.log(res);
+            getApp().globalData.room_id = res.data.data.room_id;
+            //如果是余额支付
+            if (that.data.choosePay == "yuer") {
+              var code = res.data.code;
+              if (code == 0) {
+                wx.showToast({
+                  title: "支付成功",
+                })
+                wx.navigateTo({
+                  url: '/pages/myindex/myindex'
+                })
+              } else if (code > 0) {
+                wx.showModal({
+                  title: '温馨提示',
+                  content: res.data.message,
+                  showCancel: false
+                })
+                that.setData({
+                  num: '',
+                  moneyNum: '',
+                  val: ''
+                })
+              }
+            }
+            // 如果是微信支付
+            if (that.data.choosePay == "weixin") {
+              wx.requestPayment({
+                timeStamp: res.data.data.pay_result.create_time,
+                nonceStr: res.data.data.pay_result.nonce_str,
+                package: 'prepay_id=' + res.data.data.pay_result.prepay_id,
+                'signType': 'MD5',
+                paySign: res.data.data.pay_result.paySign,
+                success: function (data) {
+                  wx.showToast({
+                    title: "支付成功",
+                  })
+                  wx.navigateTo({
+                    url: '../myindex/myindex'
+                  })
+                },
+                fail: function (data) {
+                  wx.showModal({
+                    title: '温馨提示',
+                    content: '支付失败',
+                    showCancel: false
+                  })
+                  that.setData({
+                    num: '',
+                    moneyNum: '',
+                    val: ''
+                  })
+                }
+              })
+            }
+        }
+      })
+    }else{
+      wx.showModal({
+        title: '温馨提示',
+        content: '请先授权登录',
+        showCancel: false
+      })
+    }
+  }else{
+      wx.showToast({
+        title: '输入信息有误',
+      })
   }
-})
-//麦克风帧动画
-function speaking() {
-  var _this = this;
-  //话筒帧动画
-  var i = 1;
-  this.timer = setInterval(function () {
-    i++;
-    i = i % 5;
-    _this.setData({
-      j: i
+  },
+  toRecord(){
+    wx.navigateTo({
+      url: './../record/record',
     })
-  }, 200);
-}
+  },
+  toMoney() {
+    wx.navigateTo({
+      url: './../money/money',
+    })
+  },
+})

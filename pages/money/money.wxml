@@ -1,7 +1,7 @@
 <view class="container" >
   <view class='balance'>
     <view><text>账户余额</text></view>
-    <view class='money_balance'><text>{{money_balance}}</text></view>
+    <view class='money_balance'><text>{{money}}</text></view>
   </view>
   <view class='cut_line'></view>
   <view class='get_money'>
@@ -24,7 +24,7 @@
     </view>
   </view>
   <view class='extract'>
-    <view bindtouchstart='press_down' id='{{button}}'></view>
+    <view bindtouchstart='press_down' id='{{button}}'>提  现</view>
     <view>提现金额在1到5个工作日内到账</view>
   </view> 
 </view>

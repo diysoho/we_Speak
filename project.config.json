@@ -7,9 +7,9 @@
 		"minified": true
 	},
 	"compileType": "weapp",
-	"libVersion": "1.5.4",
-	"appid": "touristappid",
-	"projectname": "1231234141",
+	"libVersion": "1.5.3",
+	"appid": "wx6e7be3486f738b76",
+	"projectname": "speak",
 	"condition": {
 		"weapp": {
 			"current": -1,

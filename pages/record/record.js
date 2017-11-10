@@ -1,4 +1,8 @@
 var app = getApp();
+var lastList = null;
+var currentListGet = [];
+var currentListSend = [];
+var time = [];
 Page({
   /**
    * 页面的初始数据
@@ -10,10 +14,11 @@ Page({
       list:[]
     },
     current:true,
-    myInfo: null,
-    getData:false
+    myInfo: {},
+    getData:false,
+    page:1,
+    scroll_top:0
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -32,14 +37,7 @@ Page({
         }
       })
     }
-  },  
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
+  }, 
   /**
    * 生命周期函数--监听页面显示
    */
@@ -48,7 +46,6 @@ Page({
       title: '加载中',
       mask:true
     })
-   console.log(this.data.myInfo);
    getData.call(this);
   },
 
@@ -56,35 +53,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    this.setData({
+      scroll_top:0
+    })
   },
   /**
    * 切换显示数据
@@ -94,56 +65,93 @@ Page({
       title: '加载中',
     })
     if (e.currentTarget.dataset.current=="2"){
+      currentListSend = [];
       this.setData({
-        current:false
+        current:false,
+        page:1,
+        scroll_top:0
       })
     }else{
+      currentListGet = [];
       this.setData({
-        current: true
+        current: true,
+        page:1,
+        scroll_top: 0
       })
     }
     getData.call(this);
+  },
+  scroll(e){
+    time.push(e.timeStamp);
+    wx.setStorageSync('timeStamp', e.timeStamp);
+    if (lastList < 10) {
+      wx.showToast({
+        title: '到底了',
+        duration: 2000
+      })
+    } else {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      setTimeout(()=>{
+        if (time.pop() == wx.getStorageSync('timeStamp')){
+          const page = this.data.page + 1;
+          this.setData({
+            page: page
+          })
+          time=[];
+          getData.call(this);
+        }
+      },1000)
+    }
   }
 })
 
 function getData(){
   const that = this;
+  const page = this.data.page;
   if (this.data.current){
     wx.request({
       url: app.globalData.url+"/Bns/Auth/room_list",
       data: {
-        openid: 12345
+        openid: getApp().globalData.openid,
+        pageid: page
       },
       success(res){
-        that.setData({
-          data:{
-            money: res.data.data.count_money,
-            num: res.data.data.count_num,
-            list: res.data.data.list
-          },
-          getData: true
-        })
-        wx.hideLoading();
+        currentListGet = currentListGet.concat(res.data.data.list);
+          that.setData({
+            data: {
+              money: res.data.data.count_money,
+              num: res.data.data.count_num,
+              list: currentListGet
+            },
+            getData: true
+          })
+          wx.hideLoading();
+          lastList = res.data.data.list.length;
       }
     })
   }else{
     wx.request({
       url: app.globalData.url + "/Bns/Auth/shoubao_list",
       data:{
-        openid:12345
+        openid: getApp().globalData.openid,
+        pageid: page
       },
       success(res){
+        currentListSend = currentListSend.concat(res.data.data.list);
         that.setData({
           data: {
             money: res.data.data.count_money,
             num: res.data.data.count_num,
-            list: res.data.data.list
+            list: currentListSend
           },
           getData: true
         })
         wx.hideLoading();
+        lastList = res.data.data.list.length;
       }
     })
   }
-  
 }

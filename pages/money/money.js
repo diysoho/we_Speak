@@ -1,44 +1,25 @@
-var tools = require("./../../utils/util.js");
+let tools = require("./../../utils/util.js");
+let md5 = require("./../../utils/md5.js");
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    money_balance: 298.75, 
+    money: 0, 
     button:"button_default",
     input:false,
     inputMoney:null,
-    enough:'enough'
+    enough:'enough',
+    timeStemp:null,
+    code:null,
+    sucGetMoney:false,
+    message:""
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中'
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    wx.hideLoading();
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    getMoney.call(this);
   },
   /**
    * 输入金额
@@ -62,32 +43,47 @@ Page({
    * 提现按钮
    */
   press_down(e){
-    console.log(tools.getTime());
     wx.showLoading({
       title: '加载中',
       mask: true
     })
+    let that = this;
     if (this.data.input){
-      const money = this.data.money_balance;
-      const inputMoney = this.data.inputMoney;
+      const { money, inputMoney} = this.data;
       if (money < inputMoney){
         this.setData({
           enough:'no_enough'
         })
-      }else{
         wx.hideLoading();
-        this.setData({
+      }else{
+        that.getMoney();
+        that.setData({
           button: "button_press_down"
-        })
-        wx.redirectTo({
-          url:'/pages/moneySucc/moneySucc?money='+inputMoney+''
-        })
+        });
+        setTimeout(()=>{
+          if (that.data.sucGetMoney){
+            if (that.data.code == 0) {
+              wx.redirectTo({
+                url: '/pages/moneySucc/moneySucc?money=' + inputMoney
+              })
+            } else {
+              wx.showModal({
+                title: '温馨提示',
+                content: "提现失败",
+                showCancel: false
+              })
+              that.setData({
+                button: "button_default"
+              })
+            }
+          }
+        },2000);
       }
     }else{
       wx.hideLoading();
       wx.showModal({
         title: '温馨提示',
-        content: '请输入金额',
+        content: this.data.messsage,
         showCancel: false
       })
     }
@@ -97,73 +93,86 @@ Page({
    */
   getAllMoney(){
     // 全部提现
+    const that = this;
+    this.setData({
+      inputMoney: this.data.money
+    })
+    this.getMoney();
+    setTimeout(()=>{
+      if (that.data.code != 0) {
+        wx.showModal({
+          title: '温馨提示',
+          content: "提现失败",
+          showCancel: false
+        })
+      } else {
+        wx.redirectTo({
+          url: '/pages/moneySucc/moneySucc?money=' + that.data.inputMoney
+        })
+      }
+    },1000)
   },
-  pay(e) {
-    var that = this;
-    var input = that.data.message;
-    if (input > 0) {
-      wx.showLoading({
-        title: '加载中',
-        mask: true
-      })
-      var timeStamp = time.timeStamp();//获取时间戳
-      var randomString = time.randomString();//获取随机数
-      var openid = app.globalData.openid;
-      var appid = app.globalData.appId;
-      var order_id = timeStamp + randomString;//订单号
-      var money = that.data.message;//提现的金额
-      var str = order_id + "-" + money + "-" + timeStamp + "-" + openid
-      //用md5加密两次
-      var sig = util.hexMD5(str);
-      var strin = sig + appid;
-      var sign = util.hexMD5(strin);
-      wx.request({
-        url: "https://www.fansba.com.cn/home/Cash/index?order_id=" + order_id + "&money=" + money + "&openid=" + openid + "&create_time=" + timeStamp + "&sign=" + sign,//提现请求地址
-        data: {},
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          console.log(res)
-          var code = res.data.code;
-          if (code > 0) {
-            console.log(res)
-            wx.showModal({
-              title: '温馨提示',
-              content: res.data.message,
-              showCancel: false
-            });
-          }
-          if (code == 0) {
-            wx.showModal({
-              title: '温馨提示',
-              content: res.data.message,
-              showCancel: false
-            })
-            wx.reLaunch({
-              url: "/pages/mine/mine",
-              success: function () {
-                console.log(1)
-              },
-              fail: function (res) {
-                console.log(res)
-              }
-            })
-          }
-          that.setData({
-            show: false,
-            message: ""
-          })
-          wx.hideLoading();
-        },
-        fail: function (err) {
-          wx.hideLoading();
-        }
-      })
-    } else {
-      wx.showToast({
-        title: '请重新输入',
-      })
-    }
-  },
+  /**
+   * 提现
+   */
+  getMoney(){
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    const openid = getApp().globalData.openid;
+    const money = this.data.inputMoney;
+    const order_id = this.data.timeStemp + (Math.random() * 9000 + 1000).toFixed(0);
+    const create_time = this.data.timeStemp;
+    const signOne = md5.hexMD5(order_id + "-" + money + "-" + create_time + "-" + openid);
+    const appid = getApp().globalData.appId;
+    const signTwo = md5.hexMD5(signOne + appid);
+    const that = this;
+    wx.request({
+      url: getApp().globalData.url + "/Bns/Cash/index",
+      data: {
+        openid: openid,
+        money: money,
+        order_id, order_id,
+        create_time: create_time,
+        sign: signTwo
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: res => {
+        that.setData({
+          code: res.data.code,
+          sucGetMoney:true,
+          messsage: res.data.messsage
+        })
+        wx.hideLoading();
+      },
+      fail: res => {
+        wx.hideLoading();
+      }
+    })
+  }
 })
+/**
+ * 请求money数据
+ */
+function getMoney(){
+  const that = this;
+  wx.request({
+    url: getApp().globalData.url + "/Bns/auth/getMyAccountInfo",
+    data: {
+      openid: getApp().globalData.openid
+    },
+    header: {
+      'content-type': 'application/json'
+    },
+    success: res => {
+      that.setData({
+        timeStemp: res.data.data.time,
+        money: res.data.data.user.money
+      });
+      wx.hideLoading();
+    }
+  })
+}

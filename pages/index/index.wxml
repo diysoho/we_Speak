@@ -1,6 +1,56 @@
 <!--index.wxml-->
 <view class="container">
-  <input bindinput='openIdchange' placeholder='openid'></input>
-  <input bindinput='roomIdchange' placeholder='room_id'></input>
-  <button class="btn-style" bindtouchstart="touchdown" bindtouchend="touchup">按住 录音</button>
+  <view class='cont_bao'>
+      <image class='cont_bg' src='/images/bj.jpg'></image> 
+     <view class='avatar_box'>
+        <image wx:if="{{!hasUserInfo}}" src='{{head}}'></image>
+        <image wx:else="{{hasUerInfo}}" src='{{userInfo.avatarUrl}}'></image>
+     </view>
+     <view class="nick">{{userInfo.nickName}}</view>
+     <!-- <button class='get_info_first' wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button> -->
+    <view class='cont_box'>
+      <view class='cont_box_son'>
+        <form bindsubmit="formSubmit">
+          <view class="section">
+            <view class="section__title">设置口令</view>
+            <input name="kouling"  bindinput='bindChange' placeholder-class="phcolor" value='{{val}}'/>
+            <view class='section_biao'>以上口令只能输入中文，最多不超过50个字</view>
+          </view>
+          <view class="section">
+            <view class="section__title">奖励 (元)</view>
+            <input name="money" type="number" bindinput='bindMoney' placeholder-class="phcolor" value='{{moneyNum}}' />
+            <view class='section_biao'>您的剩余余额<text class='yue'>{{yue}}</text>元</view>
+          </view>
+          <view class="num">
+            <view class="hongbao">数量 (个)</view>
+            <input name="num" class='hb_num' type="number" value='{{num}}' bindinput='bindNumber' placeholder-class="phcolor" />
+          </view>
+          <view class='choose_pay'>
+          <view class='fir'bindtap='choosePayMoney' data-id="weixin">
+              <view  class='square' ><image wx:if="{{choosePay=='weixin'}}" src='../../images/gou.png'></image></view> 
+              <view class='wx'>微信支付</view>  
+          </view>
+          <view class='sec' bindtap='choosePayMoney' data-id="yuer">
+                <view class='sq'><image wx:if="{{choosePay!='weixin'}}" src='../../images/gou.png'></image></view>  
+                <view class='xcx'>余额支付</view>    
+          </view>
+
+          </view>
+          <view class='section_b'>需支付服务费￥{{fw}}元</view>
+
+          <view class="btn-area" >
+            <button formType="submit" class='{{color}}'  bindtouchstart='current' bindtouchend='changecolor' >生成语音红包</button>
+          </view>
+        </form>
+        </view>
+    </view>
+  </view>
+  <view class='tabBar'>
+    <view bindtap='toRecord'>
+      <image src='/images/recordIcon.png'></image>
+    </view>
+    <view bindtap='toMoney'>
+      <image src='/images/getMoneyIcon.png'></image>
+    </view>
+  </view>
 </view>

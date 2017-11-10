@@ -6,7 +6,7 @@ Page({
    */
   data: {
     money:null,
-    button: "button_default",
+    button: "button_default"
   },
 
   /**

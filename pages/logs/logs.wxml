@@ -1,0 +1,65 @@
+<!--logs.wxml-->
+<view class="container">
+
+  <view class='top_box'>
+    <view class='avatar_box'>
+      <image src='{{headpic}}'></image>
+    </view>
+    <view class='nickName'>{{nick}}</view>
+    <view class='mike'>
+      <view class='command'><image src='/images/mike.png' class="mk"></image>{{kouling}}</view>
+    </view> 
+    <view  wx:if="{{isSpeaking}}" class="speak-style">  
+      <image wx:if="{{j==0}}"  class="sound-style" src="/images/voice1.png" ></image>
+      <image wx:if="{{j==1}}" class="sound-style" src="/images/voice2.png" ></image>
+      <image wx:if="{{j==2}}" class="sound-style" src="/images/voice3.png" ></image>
+      <image wx:if="{{j==3}}" class="sound-style" src="/images/voice4.png" ></image> 
+    </view>   
+
+    <view class='{{background}}' bindtouchstart="touchdown" bindtouchend="touchup">{{message}}</view>
+    <view class='share'>
+      <view class='toHome' bindtap='toHome'>
+        <text>我也要玩</text>
+        <image src='/images/toHome.png'></image>
+      </view>
+      <view class='zf' bindtap='toShare'>
+        <text>转发好友</text>
+        <image src='/images/zf.png'></image>
+      </view>
+      <view class='toGetMoney' bindtap='toMoney'>
+        <text>我要提现</text>
+        <image src='/images/toGetMoney.png'></image>
+      </view>
+    </view>
+  </view>
+
+  <view class='center_box'>
+    <view class='total_money'>共{{total_money}}元</view>
+    <view class='take'>领取{{lingqu}}/{{total_num}}</view>
+  </view>
+
+   <view class='gray'></view> 
+     <scroll-view scroll-y class='rank_list'>
+       <block wx:for="{{list}}" wx:key="item">
+           <view class='rank_item'>
+            <view class='rank_one'>
+              <image class='rank_num' src="{{item.headpic}}"></image> 
+            </view>
+            <view class='my_msg_list'>
+              <view class='wenzi'>{{item.nick}}</view>
+              <view class='sound' data-key='{{item.audio_url}}' bindtap='gotoPlay' data-index="{{index}}"> 
+                <image class='db' src='/images/db.png'></image> 
+                <view class='tp'>
+                  <image class="bg" src="{{item.srcurl}}"></image>
+                </view>
+              </view> 
+            </view>  
+             <view class='msg_right_list'>
+               <text class='jine'>{{item.red_money}}元</text> 
+               <text class='my_time'>{{item.create_time}}</text>  
+            </view>    
+          </view>
+    
+    </block>
+  </scroll-view>  
+</view>

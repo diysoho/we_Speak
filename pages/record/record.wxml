@@ -7,11 +7,11 @@
   </view>
   <view class='bottom' wx:if="{{getData}}">
     <view class='choose'>
-       <view class='{{current?"current":""}}' bindtap='current'>
-          <text>收到红包</text>
+       <view class='{{current?"current":""}}' data-current="1" bindtap='current'>
+          <text>发出红包</text>
        </view>
        <view class='{{current?"":"current"}}' data-current="2" bindtap='current'>
-          <text>发出红包</text>
+          <text>收到红包</text>
        </view>
     </view>
     <view class='cut_line'></view>
@@ -27,31 +27,31 @@
           </view>
        </view>
        <view class='cut_line'></view>
-       <scroll-view scroll-y class='history_list'>
+       <scroll-view scroll-y="true" bindscrolltolower="scroll" scroll-top="{{scroll_top}}" lower-threshold="{{aaaa}}" class='history_list'>
           <block wx:if="{{data.list.length}}">
             <view class='item' wx:for="{{data.list}}" wx:key="list">
               <view class='item_head'>
-                  <image src='{{item.src}}'></image>
+                  <image src='{{item.user.headpic}}'></image>
               </view>
               <view class='item_info'>
                   <view class='info_name'>
-                    <text class='name'>{{item.name}}</text>
+                    <text class='name'>{{item.user.nick}}</text>
                   </view>
                   <view>
-                    口令：<text>{{item.text}}</text>
+                    口令：<text>{{item.kouling}}</text>
                   </view>
                   <view>
-                    <text class='data'>{{item.data}}</text>
+                    <text class='data'>{{item.create_time}}</text>
                     <text class='time'>{{item.time}}</text>
                   </view>
               </view>
               <view class='item_money'>
-                  <text>{{item.money}}</text>元
+                  <text>{{item.red_money}}</text>元
               </view>
             </view> 
           </block>
           <block wx:else>
-              <view class='nothing'></view>
+              <view class='nothing'>暂无记录</view>
           </block>  
        </scroll-view>
     </view>
