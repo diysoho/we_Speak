@@ -1,28 +1,24 @@
-<!--pages/myindex/myindex.wxml-->
 <view class='container'>
   <view class='bg'>
-    <image class='img' src='/images/background.jpg'></image>
+    <image class='img' src='./../../images/background.png'></image>
     <view class='location avatar_box'>
         <image src='{{tx}}'></image>
+        <view>{{name}}</view>
     </view>
-    <view class='location text'>发了一个语音红包</view>
-    <view class='location code' data-key="https://www.fansba.com.cn/Bns/Uploads/{{roomid}}/{{roomid}}.jpg" bindtouchstart='start'bindtouchend="end" bindtap='save'>
-      <image class='picture' src='https://www.fansba.com.cn/Bns/Uploads/{{roomid}}/{{roomid}}.jpg'></image>
+    <view class='location text'>发了一个语音口令</view>
+    <view class='location code' data-key="{{url}}/Bns/Uploads/{{roomid}}/{{roomid}}.jpg" bindtouchstart='start' bindtouchend="end" bindtap='save'>
+      <image class='picture' src='{{url}}/Bns/Uploads/{{roomid}}/{{roomid}}.jpg'></image>
     </view>
     <view class='location bottom'>
       <view class='btn-area' bindtap='fenx'>
-        <button wx:if="{{canUse}}" open-type='share'>分享好友</button>
-        <view class='jrong' bindtap='tishi' wx:else >分享好友</view>
+        <button wx:if="{{canUse}}" open-type='share'>转发到群聊</button>
+        <view class='jrong' bindtap='tishi' wx:else >转发到群聊</view>
       </view>
-      <view class='{{color}}'  bindtouchstart='current' bindtouchend='changecolor'   bindtap='friends_share'>
+      <view class='{{color}}' bindtap='friends_share'>
         <text>生成分享图</text>
       </view>
     </view>
   </view>
-
-  
- 
-
-
-
 </view>
+
+

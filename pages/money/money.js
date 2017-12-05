@@ -1,4 +1,3 @@
-let tools = require("./../../utils/util.js");
 let md5 = require("./../../utils/md5.js");
 Page({
   /**
@@ -13,7 +12,7 @@ Page({
     timeStemp:null,
     code:null,
     sucGetMoney:false,
-    message:""
+    messsage:""
   },
   /**
    * 生命周期函数--监听页面显示
@@ -83,7 +82,7 @@ Page({
       wx.hideLoading();
       wx.showModal({
         title: '温馨提示',
-        content: this.data.messsage,
+        content: '请输入金额',
         showCancel: false
       })
     }
@@ -92,25 +91,10 @@ Page({
    * 全部提现
    */
   getAllMoney(){
-    // 全部提现
-    const that = this;
     this.setData({
-      inputMoney: this.data.money
+      inputMoney: this.data.money*1,
+      input:true
     })
-    this.getMoney();
-    setTimeout(()=>{
-      if (that.data.code != 0) {
-        wx.showModal({
-          title: '温馨提示',
-          content: "提现失败",
-          showCancel: false
-        })
-      } else {
-        wx.redirectTo({
-          url: '/pages/moneySucc/moneySucc?money=' + that.data.inputMoney
-        })
-      }
-    },1000)
   },
   /**
    * 提现
@@ -159,6 +143,10 @@ Page({
  */
 function getMoney(){
   const that = this;
+  wx.showLoading({
+    title: '加载中',
+    mask: true
+  })
   wx.request({
     url: getApp().globalData.url + "/Bns/auth/getMyAccountInfo",
     data: {

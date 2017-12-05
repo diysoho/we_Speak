@@ -6,9 +6,9 @@ App({
     socket: "wss://www.fansba.com.cn",
     openid: "",
     room_id: '',
-    money:0
+    money:'-'
   },
-  onShow: function (options) {
+  onShow: function (cb) {
     const that = this;
     wx.login({
       success: function (res) {
@@ -17,27 +17,26 @@ App({
           wx.request({
             url: that.globalData.url + '/Bns/Auth/get_user_info?code=' + res.code,
             success: res => {
-              console.log(res);
               that.globalData.openid = res.data.data.auth.openid;
-              that.globalData.money = res.data.data.user.money;
               wx.setStorageSync('usermg', res.data.data.user);
+              typeof cb == 'function' && cb(res.data.data.user.money);
             }
           })
         } else {
         }
       }
     });
-    if (!wx.canIUse('getSetting.success')) {
-      wx.showModal({
-        title: '温馨提示',
-        content: '请升级您的微信版本，然后使用',
-        showCancel: false
-      })
-      return;
-    }
+    // if (!wx.canIUse('getSetting.success')) {
+    //   wx.showModal({
+    //     title: '温馨提示',
+    //     content: '请升级您的微信版本，然后使用',
+    //     showCancel: false
+    //   })
+    //   return;
+    // }
   },
   getUserInfo: function (cb) {
-    var that = this;
+    const that = this;
     if (this.globalData.userInfo) {
       typeof cb == "function" && cb(this.globalData.userInfo);
     } else {
@@ -46,15 +45,21 @@ App({
         success: function () {
           wx.getUserInfo({
             success: function (res) {
+              wx.request({
+                url: that.globalData.url + '/Bns/Auth/set_user',
+                data: {
+                  openid: that.globalData.openid,
+                  nick: res.userInfo.nickName,
+                  headpic: res.userInfo.avatarUrl
+                },
+                method: 'GET',
+                success: function (res) {
+                }
+              })
               that.globalData.userInfo = res.userInfo;
               typeof cb == "function" && cb(that.globalData.userInfo);
             },
             fail(){
-              wx.showModal({
-                title:'温馨提示',
-                content:"拒绝后，请将小程序删除，重新进入",
-                showCancel:false
-              })
             }
           })
         }

@@ -82,6 +82,7 @@ Page({
     getData.call(this);
   },
   scroll(e){
+    const that = this;
     time.push(e.timeStamp);
     wx.setStorageSync('timeStamp', e.timeStamp);
     if (lastList < 10) {
@@ -96,8 +97,8 @@ Page({
       })
       setTimeout(()=>{
         if (time.pop() == wx.getStorageSync('timeStamp')){
-          const page = this.data.page + 1;
-          this.setData({
+          const page = that.data.page + 1;
+          that.setData({
             page: page
           })
           time=[];

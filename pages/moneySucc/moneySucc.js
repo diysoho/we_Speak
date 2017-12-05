@@ -1,11 +1,10 @@
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    money:null,
+    money:'-',
     button: "button_default"
   },
 
@@ -13,18 +12,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中',
-    })
     this.setData({
       money: options.money
     })
-  },
-  /**
-   * 初次渲染完成
-   */
-  onReady(){
-    wx.hideLoading();
   },
   success(){
     this.setData({
@@ -32,6 +22,11 @@ Page({
     })
     wx.reLaunch({
       url:"/pages/money/money"
+    })
+  },
+  toHome(){
+    wx.reLaunch({
+      url: "/pages/index/index"
     })
   }
 })

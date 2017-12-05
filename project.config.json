@@ -9,7 +9,7 @@
 	"compileType": "weapp",
 	"libVersion": "1.5.3",
 	"appid": "wx6e7be3486f738b76",
-	"projectname": "speak",
+	"projectname": "wx6e7be3486f738b76",
 	"condition": {
 		"weapp": {
 			"current": -1,

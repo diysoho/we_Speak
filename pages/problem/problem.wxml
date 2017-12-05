@@ -1,0 +1,48 @@
+<view class="container">
+  <view class='item'>
+    <view class='{{id==1?"item_show_change":"item_show"}}' data-id='1' bindtap='click'>
+      <text>随我说-语音口令怎么玩？</text><image class='{{id==1?"current":"image"}}' src='/images/right.png'></image>
+    </view>
+    <view class='description' wx:if="{{id==1}}">设置一个有奖励的语音口令，好友说对口令才能领到奖励</view>
+  </view>
+  <view class='item'>
+  <view class='{{id==2?"item_show_change":"item_show"}}' data-id='2' bindtap='click'>
+    <text>支付成功后，口令没发出去？</text><image class='{{id==2?"current":"image"}}' src='/images/right.png'></image>
+  </view>
+  <view class='description' wx:if="{{id==2}}">重新进入转发页面，重新转发，或者将二维码保存，分享到朋友圈或者发送给其他人</view>
+</view>
+  <view class='item'>
+  <view class='{{id==3?"item_show_change":"item_show"}}' data-id='3' bindtap='click'>
+    <text>好友可以转发我的口令吗？</text><image class='{{id==3?"current":"image"}}' src='/images/right.png'></image>
+  </view>
+  <view class='description' wx:if="{{id==3}}">可以的，您分享给好友或者转发到微信群的语音口令，其他好友均可再次转发</view>
+</view>
+  <view class='item'>
+  <view class='{{id==4?"item_show_change":"item_show"}}' data-id='4' bindtap='click'>
+    <text>发口令会收服务费吗？</text><image class='{{id==4?"current":"image"}}' src='/images/right.png'></image>
+  </view>
+  <view class='description' wx:if="{{id==4}}">发送的语音口令会收取2%的服务费</view>
+</view>
+  <view class='item'>
+  <view class='{{id==5?"item_show_change":"item_show"}}' data-id='5' bindtap='click'>
+    <text>未领取的金额会怎样处理？</text><image class='{{id==5?"current":"image"}}' src='/images/right.png'></image>
+  </view>
+  <view class='description' wx:if="{{id==5}}">未领取的金额将于24小时候退还至您的小程序余额；未领取的剩余金额，也会退还至小程余额</view>
+</view>
+  <view class='item'>
+  <view class='{{id==6?"item_show_change":"item_show"}}' data-id='6' bindtap='click'>
+    <text>如何体现到微信钱包？</text><image class='{{id==6?"current":"image"}}' src='/images/right.png'></image>
+  </view>
+  <view class='description' wx:if="{{id==6}}">在主页上点击去提现，或者在其他页面点击去提现均可跳转到提现页面，每次提现金额不小于1元</view>
+</view>
+  <view class='item'>
+  <view class='{{id==7?"item_show_change":"item_show"}}' data-id='7' bindtap='click'>
+    <text>提现会收取服务费吗？多久到账？</text><image class='{{id==7?"current":"image"}}' src='/images/right.png'></image>
+  </view>
+  <view class='description' wx:if="{{id==7}}">提现不收取任何费用；申请提现会在1-5个工作日内转账到微信钱包</view>
+  </view>
+  <view class='tellPhone'>
+    <text>客服QQ：494999197</text>
+  </view>
+  <view class='problom'><text>如果您有其他疑问，可以联系在线客服为您解答</text></view>
+</view>

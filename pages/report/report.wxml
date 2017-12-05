@@ -1,0 +1,23 @@
+<view class='container'>
+  <view class='reminder'>
+    <text>请选择投诉原因:</text>
+  </view>
+  <view class='list'>
+    <form bindsubmit="formSubmit">
+          <checkbox-group bindchange="checkboxChange">
+            <label class="checkbox list_item " wx:for="{{array}}" wx:key="item">    
+              <view class='word'>{{item.value}}</view>
+                <checkbox class='box' value="{{item.name}}" checked="{{item.checked}}"/> 
+            </label>    
+          </checkbox-group>
+      <view class='qita'>
+        <text class='wenzi'>其他:</text>
+        <input name="advise"  bindinput='inp' placeholder-class="phcolor" value='{{zhi}}'/>
+      </view>
+      <view>
+          <button formType="submit" class="commit">确认投诉</button>
+      </view>
+    </form>
+    <view class='bottom'>确认投诉后,我们将在第一时间处理投诉信息</view>
+  </view>
+</view>

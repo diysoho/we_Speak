@@ -5,7 +5,9 @@
     "pages/myindex/myindex",
     "pages/record/record",
     "pages/money/money",
-    "pages/moneySucc/moneySucc"
+    "pages/moneySucc/moneySucc",
+    "pages/problem/problem",
+    "pages/report/report"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -13,5 +15,6 @@
     "navigationBarTitleText": "随 我 说",
     "navigationBarTextStyle":"#ffffff",
     "enablePullDownRefresh": "false"
-  }
+  },
+  "enablePullDownRefresh": false
 }

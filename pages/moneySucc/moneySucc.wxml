@@ -1,6 +1,6 @@
 <view class="container">
   <view class='top'>
-    <view class='image'><image src='/images/success@3x.png'></image></view>
+    <view class='image'><image src='./../../images/success@3x.png'></image></view>
     <view class='title'>提现申请已提交</view>
     <view class='text'>提现金额在1到5个工作日内到账</view>
   </view>
@@ -9,4 +9,5 @@
     <view><text>提现金额</text>￥{{money}}</view>
   </view>
   <view bindtap='success' id='{{button}}'>完成</view>
+  <view bindtap='toHome' class='toHome'>返回首页</view>
 </view>

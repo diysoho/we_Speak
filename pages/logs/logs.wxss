@@ -37,7 +37,7 @@
   -moz-border-radius: 50%;
   border-radius: 50%;
   overflow: hidden;
-  margin: 32rpx auto 22rpx;
+  margin: 22rpx auto 22rpx;
   background: #FFF;
 }
 
@@ -55,10 +55,10 @@
   height: 34rpx;
   line-height: 30rpx;
   font-family: PingFang SC;
-  color: #6D1A0C;
+  color: #fff;
   font-size: 34rpx;
   text-align: center;
-  margin: 0 auto 34rpx;
+  margin: 22rpx auto 62rpx;
 }
 
 .mike {
@@ -77,30 +77,31 @@
 }
 
 .mk {
-  width: 70rpx;
-  height: 70rpx;
+  width: 60rpx;
+  height: 60rpx;
   overflow: hidden;
   display: inline-block;
   padding-right: 20rpx;
   vertical-align: middle;
+  margin-bottom:20rpx;
 }
 
 .command {
   width: 80%;
   margin-left: 30rpx;
   font-family: PingFang SC;
-  color: #FFC11B;
-  font-size: 48rpx;
-  line-height: 60rpx;
+  color: #ffe2b1;
+  font-size: 40rpx;
+  line-height: 70rpx;
   margin: 0 auto;
-  margin-bottom: 24rpx;
+  margin-bottom: 51rpx;
   text-align: center;
 }
 
 .share {
   width: 90%;
   height: 44rpx;
-  margin: 40rpx auto 28rpx;
+  margin: 40rpx auto 0rpx;
   display: flex;
   justify-content: space-around;
 }
@@ -116,14 +117,15 @@
   color: white;
 }
 .share view image{
-  height: 100%;
-  width:47rpx;
+  height:82%;
+  width:42rpx;
+  margin-top:2%;
 }
 .center_box {
   border-bottom: 1rpx solid #DDD;
-  width: 100%;
-  height: 60rpx;
-  line-height: 60rpx;
+  padding: 0 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   display: flex;
   display: -webkit-box;
   display: -webkit-flex;
@@ -137,10 +139,11 @@
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
 }
-
+.center_box .center_box_num{
+  margin:0 6rpx;
+}
 .total_money {
-  margin-left: 40rpx;
-  margin-right: 136rpx;
+  margin-right: 50rpx;
   font-family: PingFang SC;
   color: #666;
   font-size: 28rpx;
@@ -150,46 +153,44 @@
   font-family: PingFang SC;
   color: #666;
   font-size: 28rpx;
+  flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  -webkit-box-flex: 1;
 }
 
 .gray {
-  position: absolute;
-  top: 678rpx;
-  left: 0;
   width: 100%;
   height: 12rpx;
   background: #f7f7f7;
 }
 
 .rank_list {
-  position: absolute;
   width: 100%;
-  top: 690rpx;
-  left: 0;
-  bottom: 0;
-  display: table;
+  height: auto;
+  overflow: hidden;
 }
 
 .rank_list .rank_item {
-  height: 108rpx;
+  height: 112rpx;
   border-bottom: 2rpx solid #ddd;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 26rpx;
-  padding: 25rpx;
+  font-size: 28rpx;
+  padding: 24rpx;
   overflow: hidden;
 }
 
 .rank_one {
-  width: 108rpx;
-  height: 108rpx;
+  width: 112rpx;
+  height: 112rpx;
   overflow: hidden;
-  -webkit-border-radius: 30rpx;
-  -moz-border-radius: 30rpx;
-  border-radius: 30rpx;
+  -webkit-border-radius: 16rpx;
+  -moz-border-radius: 16rpx;
+  border-radius: 16rpx;
   margin-right: 24rpx;
 }
 
@@ -217,9 +218,8 @@
   -moz-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
 }
 
 .wenzi {
@@ -227,13 +227,15 @@
   font-weight: 700;
   color: #333;
   font-size: 26rpx;
+  padding-left: 18rpx;
 }
 
 .sound {
-  width: 160rpx;
-  height: 50rpx;
+  width: 200rpx;
+  height: 70rpx;
   overflow: hidden;
   margin-bottom: 3rpx;
+  position: relative;
 }
 
 .sound image {
@@ -261,24 +263,26 @@
   -moz-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .jine {
   font-family: PingFang SC;
   font-weight: 700;
   color: #333;
-  font-size: 42rpx;
+  font-size: 34rpx;
   text-align: right;
+  margin-bottom: 10rpx;
+  margin-left: 20rpx;
 }
 
 .my_time {
   font-family: PingFang SC;
   color: #999;
-  font-size: 34rpx;
+  font-size: 24rpx;
   text-align: right;
+  justify-content: e
 }
 
 .db {
@@ -287,10 +291,10 @@
 }
 
 .tp {
-  width: 160rpx;
-  height: 42rpx;
-  position: relative;
-  top: -51rpx;
+  width: 200rpx;
+  height: 70rpx;
+  position: absolute;
+  top: 0;
   left: 5rpx;
   z-index: 3;
   overflow: hidden;
@@ -301,32 +305,113 @@
   height: 100%;
 }
 
-.speak {
+.speak,.notspeak,.speakWrap,.done{
   background: #ffdf7e;
   color: #333;
-  width: 440rpx;
-  height: 110rpx;
-  line-height: 110rpx;
+  width: 400rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   border: none;
   -webkit-border-radius: 10rpx;
   -moz-border-radius: 10rpx;
   border-radius: 10rpx;
-  font-size: 40rpx;
+  font-size: 34rpx;
   text-align: center;
-  margin: 0rpx auto 40rpx;
+  margin: 0rpx auto 60rpx;
 }
-
 .notspeak {
   background: #c19d30;
-  color: #fff;
-  width: 440rpx;
-  height: 110rpx;
-  line-height: 110rpx;
-  border: none;
-  -webkit-border-radius: 10rpx;
-  -moz-border-radius: 10rpx;
-  border-radius: 10rpx;
-  font-size: 40rpx;
+  color: #FFFFFF;
+}
+.speakWrap{
+  background:#d95a40;
+  color:#FFC435;
+  font-size:58rpx;
+  margin:0 auto 60rpx;
+}
+.speakWrap #done{
+  margin-left: 10rpx;
+  font-size: 34rpx;
+}
+.done{
+  background:#fc917c;
+  color: #FFFFFF;
+}
+.view_record{
+  width: 100%;
+  line-height: 30rpx;
   text-align: center;
-  margin: 0rpx auto 40rpx;
+  color: #2d89df;
+  font-size: 28rpx;
+  margin:60rpx 0 30rpx;
+}
+.not_receive{
+  font-size: 28rpx;
+  text-align: center;
+  color: #ddd;
+  line-height: 28rpx;
+  width: 100%;
+  margin-bottom: 30rpx;
+}
+
+.coverHide,.coverShow{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .6);
+  z-index: 999;
+  display: none;
+}
+.coverShow{
+  display: block;
+}
+.sucPrompt{
+  width:566rpx;
+  height:394rpx;
+  background:white;
+  margin:240rpx auto 0;
+  text-align:center;
+  font-size:36rpx;
+  -webkit-border-radius: 16rpx;
+  -moz-border-radius: 16rpx;
+  border-radius: 16rpx;
+  overflow:hidden;
+}
+.sucPrompt .title{
+  margin: 50rpx 0 78rpx;
+  font-size: 40rpx;
+  color: #333333;
+  font-weight:700;
+}
+.sucPrompt .content{
+  margin-bottom: 78rpx;
+  color: #666;
+}
+.sucPrompt .content text{
+  margin: 0 10rpx;
+}
+.sucPrompt .choice{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: flex-end;
+}
+.sucPrompt .choice view{
+  font-size: 30rpx;
+  float: right;
+  margin-right: 66rpx;
+}
+.sucPrompt .choice view:nth-of-type(2){
+  color: #1AAD19;
+}
+.sucPrompt .choice view:nth-of-type(1){
+  color: #333;
+}
+.toReport{
+  color: #2d89df;
+  font-size: 26rpx;
 }
