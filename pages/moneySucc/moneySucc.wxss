@@ -45,7 +45,7 @@
 }
 
 #button_press_down {
-  width: 400rpx;
+  width: 88%;
   -webkit-border-radius: 10rpx;
   -moz-border-radius: 10rpx;
   border-radius: 10rpx;
@@ -59,15 +59,32 @@
 }
 
 #button_default {
-  width: 400rpx;
+  width: 88%;
   -webkit-border-radius: 10rpx;
   -moz-border-radius: 10rpx;
   border-radius: 10rpx;
   height: 98rpx;
-  margin: 80rpx auto 0;
+  margin: 36rpx auto 36rpx;
   background-color: #1AAD19;
   line-height: 98rpx;
   text-align: center;
   font-size: 40rpx;
   color: #FFFFFF;
+}
+.toHome{
+  width: 88%;
+  -webkit-border-radius: 10rpx;
+  -moz-border-radius: 10rpx;
+  border-radius: 10rpx;
+  height: 98rpx;
+  margin: 0 auto;
+  background-color: #ffffff;
+  line-height: 98rpx;
+  text-align: center;
+  font-size: 40rpx;
+  color: #333;
+  border: 1rpx solid #ddd;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }

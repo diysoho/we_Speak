@@ -7,7 +7,7 @@
   <view class='get_money'>
     <view class='show_title'>
       <text class='title'>提现金额:</text>
-      <input type="number" class='number' bindinput="input"></input>
+      <input type="number" class='number' bindinput="input" value='{{inputMoney}}'></input>
     </view>
     <view class='hide_title'>
       <text class='title'>提现金额:</text>
@@ -24,7 +24,7 @@
     </view>
   </view>
   <view class='extract'>
-    <view bindtouchstart='press_down' id='{{button}}'>提  现</view>
+    <view bindtap='press_down' id='{{button}}'>提  现</view>
     <view>提现金额在1到5个工作日内到账</view>
   </view> 
 </view>

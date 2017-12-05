@@ -27,7 +27,6 @@ function randomString() {
 }
 function clear(obj) {
   obj = obj.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-
   var c = obj.split("."); // 防止第二次输入 "."
   if (c.length == 3) {
     var d = [c[0], c[1]];
@@ -49,5 +48,4 @@ module.exports = {
   timeStamp: timeStamp,
   randomString: randomString,
   clear: clear
- 
 }

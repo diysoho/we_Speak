@@ -1,0 +1,62 @@
+.container{
+  padding: 40rpx;
+  
+}
+.item{
+  color: #333;
+  margin-bottom: 16rpx;
+  background: white;
+  border-radius: 10rpx;
+}
+.item_show,.item_show_change{
+  padding: 30rpx 20rpx;
+  line-height: 30rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.item_show_change{
+  color: #999 !important;
+}
+.description{
+  padding: 30rpx;
+  font-size: 24rpx;
+  border-top: 2rpx solid #ddd;
+}
+.item text{
+  flex: 1;
+}
+.item .image,.current{
+  height: 30rpx;
+  width: 20rpx;
+}
+.item .current{
+  transform:rotate(90deg);
+  transition-duration: .3s;
+  -moz-transition-duration: .3s;
+  -webkit-transition-duration: .3s; 
+  -o-transition-duration: .3s; 
+}
+.item .image{
+  transform:rotate(0);
+  transition-duration: .3s;
+  -moz-transition-duration: .3s;
+  -webkit-transition-duration: .3s; 
+  -o-transition-duration: .3s; 
+}
+.tellPhone{
+  margin: 46rpx 0 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+  background: #1AAD19;
+  color: white;
+  font-size: 32rpx;
+}
+.problom{
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+}

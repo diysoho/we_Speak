@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <view class='cont_bao'>
-      <image class='cont_bg' src='/images/bj.jpg'></image> 
+      <image class='cont_bg' src='./../../images/bj.jpg'></image> 
      <view class='avatar_box'>
         <image wx:if="{{!hasUserInfo}}" src='{{head}}'></image>
         <image wx:else="{{hasUerInfo}}" src='{{userInfo.avatarUrl}}'></image>
@@ -13,19 +13,19 @@
         <form bindsubmit="formSubmit">
           <view class="section">
             <view class="section__title">设置口令</view>
-            <input name="kouling"  bindinput='bindChange' placeholder-class="phcolor" value='{{val}}'/>
-            <view class='section_biao'>以上口令只能输入中文，最多不超过50个字</view>
+            <input name="kouling"  bindinput='bindChange' placeholder-class="phcolor" value='{{val}}' placeholder='请输入中文口令' />
+            <view class='section_biao' bindtap='rule'>禁止发布违反国家法律法规及小程序规则的内容</view>
           </view>
           <view class="section">
-            <view class="section__title">奖励 (元)</view>
-            <input name="money" type="number" bindinput='bindMoney' placeholder-class="phcolor" value='{{moneyNum}}' />
-            <view class='section_biao'>您的剩余余额<text class='yue'>{{yue}}</text>元</view>
+            <view class="section__title">打赏 (元)</view>
+            <input name="money" type="digit" bindinput='bindMoney' placeholder-class="phcolor" value='{{moneyNum}}' placeholder="请输入金额"/>
+            <view class='section_biaoyue'>您的剩余余额<text class='yue'>{{yue}}</text>元</view>
           </view>
-          <view class="num">
-            <view class="hongbao">数量 (个)</view>
-            <input name="num" class='hb_num' type="number" value='{{num}}' bindinput='bindNumber' placeholder-class="phcolor" />
+          <view class="section">
+            <view class="section__title">数量 (个)</view>
+            <input name="num" type="number" value='{{num}}' bindinput='bindNumber' placeholder-class="phcolor" placeholder="请输入个数"/>
           </view>
-          <view class='choose_pay'>
+          <!-- <view class='choose_pay'>
           <view class='fir'bindtap='choosePayMoney' data-id="weixin">
               <view  class='square' ><image wx:if="{{choosePay=='weixin'}}" src='../../images/gou.png'></image></view> 
               <view class='wx'>微信支付</view>  
@@ -35,11 +35,11 @@
                 <view class='xcx'>余额支付</view>    
           </view>
 
-          </view>
-          <view class='section_b'>需支付服务费￥{{fw}}元</view>
+          </view> -->
+          <view class='section_b' bindtap='showDescription'>需支付服务费￥{{fw}}元</view>
 
           <view class="btn-area" >
-            <button formType="submit" class='{{color}}'  bindtouchstart='current' bindtouchend='changecolor' >生成语音红包</button>
+            <button formType="submit" class='{{color}}'  bindtouchstart='current' bindtouchend='changecolor' >生成语音口令</button>
           </view>
         </form>
         </view>
@@ -47,10 +47,32 @@
   </view>
   <view class='tabBar'>
     <view bindtap='toRecord'>
-      <image src='/images/recordIcon.png'></image>
+      <image src='./../../images/recordIcon.png'></image>
     </view>
     <view bindtap='toMoney'>
-      <image src='/images/getMoneyIcon.png'></image>
+      <image src='./../../images/getMoneyIcon.png'></image>
+    </view>
+    <view bindtap='toProblem'>
+      <image src='./../../images/help.png'></image>
     </view>
   </view>
+  <view class='problem' bindtap='toReport'>违规内容反馈</view>
 </view>
+<view class='rule' wx:if="{{showRule}}" bindtap='rule'>
+<view style='font-size:38rpx;margin-bottom:30rpx;text-align:center'>用户规范</view>
+<view style='margin-bottom:40rpx'>用户的言行不得违反《计算机信息网络国际联网安全保护管理办法》、《互联网信息服务管理办法》、《互联网电子公告服务管理规定》、《维护互联网安全的决定》、《互联网新闻信息服务管理规定》等相关法律规定，不得在随我说小程序中发布、传播或以其它方式传送含有下列内容之一的信息：</view>
+<view>  1、反对宪法所确定的基本原则的；</view> 
+<view>  2、危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的； </view>
+<view>  3、损害国家荣誉和利益的； </view>
+<view>  4、煽动民族仇恨、民族歧视、破坏民族团结的； </view>
+<view>  5、破坏国家宗教政策，宣扬邪教和封建迷信的； </view>
+<view>  6、散布谣言，扰乱社会秩序，破坏社会稳定的； </view>
+<view>  7、散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的； </view>
+<view>  8、侮辱或者诽谤他人，侵害他人合法权利的； </view>
+<view>  9、煽动非法集会、结社、游行、示威、聚众扰乱社会秩序的； </view>
+<view>  10、含有虚假、有害、胁迫、侵害他人隐私、骚扰、侵害、中伤、粗俗、猥亵、或其它道德上令人反感的内容；</view> 
+<view>  11、侵犯他人知识产权或其他合法权益的； </view>
+<view>  12、含有中国法律、法规、规章、条例以及任何具有法律效力之规范所限制或禁止的其它内容的。
+</view>
+</view>
+

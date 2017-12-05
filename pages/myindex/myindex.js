@@ -7,34 +7,19 @@ Page({
     roomid:'',
     bns:'Bns',
     up:'Uploads',
-    url: "https://www.fansba.com.cn",
     create_user_openid:'',
     color:'two',
     canUse: wx.canIUse('button.open-type.share'),
     tx:'',
-    name:''
+    name:'',
+    url:''
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  current: function (e) {
-    var that = this;
-    that.setData({
-      color: "anxia"
-    })
-  },
-  changecolor: function (e) {
-    var that = this;
-    that.setData({
-      color: "two"
-    })
 
-  },
   onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
+    this.setData({
+      url:getApp().globalData.url
     })
+    
     if (options.roomid){
       this.setData({
         roomid: options.roomid,
@@ -48,21 +33,24 @@ Page({
         create_user_openid: creat_openid,
       })
     }
+    
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     const that = this;
     wx.request({
-      url: that.data.url +'/Bns/Room/room_info_share',
+      url: getApp().globalData.url +'/Bns/Room/room_info_share',
       data:{
         room_id: that.data.roomid,
         create_user_openid: that.data.create_user_openid
       },
       success:res=>{
-        console.log(res);
         that.setData({
           tx: res.data.data.user.headpic,
           name: res.data.data.user.nick
@@ -70,7 +58,6 @@ Page({
         wx.hideLoading();
       }
     })
-    
   },
 
   /**
@@ -84,7 +71,7 @@ Page({
       }
     }
     return {
-      title: that.data.name+"发了一个红包",
+      title: that.data.name+"发了一个语音口令",
       path: '/pages/logs/logs?id=' + that.data.roomid + '&crearid='+that.data.create_user_openid,
       success: function (res) {
         // 转发成功
@@ -105,58 +92,51 @@ Page({
       showCancel: false,
     })
   },
-  friends_share:function(e){
-    wx.showModal({
-      title: '温馨提示',
-      content: '点击小程序二维码保存到相册分享到朋友圈',
-      success: function (res) {
-        if (res.confirm) {
-        } else if (res.cancel) {
-        }
+  friends_share(e){
+    console.log(this.data.roomid);
+      const that = this;
+      console.log(wx.getStorageSync('image'));
+      if (wx.getStorageSync('image').roomid!=this.data.roomid) {
+        console.log(1);
+        wx.showLoading({
+          title: '生成分享图',
+        })
+        wx.request({
+          url: getApp().globalData.url + '/Bns/room/share_image',
+          data: {
+            room_id: that.data.roomid,
+            is_check:1
+          },
+          success: res => {
+            wx.setStorageSync('image', { url: getApp().globalData.url + '/Bns/room/share_image/room_id/' + that.data.roomid, roomid: that.data.roomid});
+              if (res.data.code == 0) {
+                wx.hideLoading();
+                wx.previewImage({
+                  current: getApp().globalData.url + '/Bns/room/share_image/room_id/' + that.data.roomid, // 当前显示图片的http链接
+                  urls: [getApp().globalData.url + '/Bns/room/share_image/room_id/' + that.data.roomid] // 需要预览的图片http链接列表
+                })
+              } else {
+                wx.showModal({
+                  title: '温馨提示',
+                  content: '生成图片失败，请重新点击',
+                })
+              }
+            
+          }
+        })
+      } else {
+        wx.previewImage({
+          current: wx.getStorageSync('image').url, 
+          urls: [wx.getStorageSync('image').url] 
+        })
       }
-    });
   },
 
- 
   tishi:function(e){
       wx.showModal({
         title: '温馨提示',
         content:'由于您版本较低，请点击右上角分享',
         showCancel: false
       })
-  },
-  //保存二维码图片 分享到朋友圈
-  save:function(e){
-    var  that = this;
-    var  pic=e.currentTarget.dataset.key;
-    var shijian = e.timeStamp
-    //触摸时间距离页面打开的毫秒数  
-    // var touchTime = that.data.touch_end - that.data.touch_start;
-    if(shijian>350){
-      wx.getImageInfo({
-        src: pic,
-        success: function (res) {
-          var path = res.path;
-          wx.saveImageToPhotosAlbum({
-            filePath: path,
-            success(res) {
-              wx.showToast({
-                title: '保存成功',
-                icon: 'success',
-                duration: 2000
-              })
-            },
-            fail: function (res) {
-              wx.showToast({
-                title: '保存失败',
-                icon: 'success',
-                duration: 2000
-              })
-            }
-          })
-        }
-      })
-
-    }
   }
 })

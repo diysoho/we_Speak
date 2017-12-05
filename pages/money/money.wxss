@@ -11,7 +11,7 @@
 }
 
 .balance view:nth-of-type(1) {
-  margin: 36rpx 0 46rpx;
+  margin: 36rpx 0 26rpx;
   font-size: 32rpx;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .get_money .all_money {
-  color: #12B5E8;
+  color: #2d89df;
   font-size: 28rpx;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .extract #button_default {
-  width: 400rpx;
+  width: 88%;
   margin: 62rpx auto 10rpx;
   -webkit-border-radius: 10rpx;
   -moz-border-radius: 10rpx;
@@ -111,7 +111,7 @@
 }
 
 .extract #button_press_down {
-  width: 400rpx;
+  width: 88%;
   margin: 62rpx auto 10rpx;
   -webkit-border-radius: 10rpx;
   -moz-border-radius: 10rpx;
